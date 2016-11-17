@@ -20,69 +20,69 @@ class AVLTree : public Drawable
       AVLTreeNode<T>* root;
 
       bool avlFlag;
-      int sz;
+      int sze;
 
       int (*compare_items) (T* item_1, T* item_2);
       int (*compare_keys) (String* key, T* item);
 	  
-		
-      void setRootNode(AVLTreeNode<T>* tNode);  //you can get by without using these methods, refer to root directly//
 	  
-      AVLTreeNode<T>* getRootNode();//
-	  
-      int getHeight(AVLTreeNode<T>* tNode);  //from lab
+      void setRootNode(AVLTreeNode<T>* tNode); //123	  //you can get by without using these methods, refer to root directly//
 	  
 	  
-      int isBalanced(AVLTreeNode<T>* tNode);//
+      AVLTreeNode<T>* getRootNode(); //130
+	  
+      int getHeight(AVLTreeNode<T>* tNode);  //136
+	  
+      int isBalanced(AVLTreeNode<T>* tNode); //159
 	  
 	  //
-      bool checkBalanceFactors(AVLTreeNode<T>* tNode);
+      bool checkBalanceFactors(AVLTreeNode<T>* tNode); //180
 	  
 
-      void destroyItem(AVLTreeNode<T>* tNode);//
-      void destroy();//
+      void destroyItem(AVLTreeNode<T>* tNode); //186
+      void destroy(); //197
 
-      AVLTreeNode<T>* insertItem(AVLTreeNode<T>* tNode, T* item);//
+      AVLTreeNode<T>* insertItem(AVLTreeNode<T>* tNode, T* item); //204
 	  
 	  //
-      AVLTreeNode<T>* removeItem(AVLTreeNode<T>* tNode, String* searchKey);
+      AVLTreeNode<T>* removeItem(AVLTreeNode<T>* tNode, String* searchKey); //252
 	  //
-      AVLTreeNode<T>* removeNode(AVLTreeNode<T>* tNode);
+      AVLTreeNode<T>* removeNode(AVLTreeNode<T>* tNode); //258
 	  //
-      AVLTreeNode<T>* removeLeftMost(AVLTreeNode<T>* tNode);
+      AVLTreeNode<T>* removeLeftMost(AVLTreeNode<T>* tNode); //264
 	  //
-      T* findLeftMost(AVLTreeNode<T>* tNode);
+      T* findLeftMost(AVLTreeNode<T>* tNode); //270
 	  
 	  //
-      AVLTreeNode<T>* rotateLeft(AVLTreeNode<T>* tNode);
+      AVLTreeNode<T>* rotateLeft(AVLTreeNode<T>* tNode); //276
 	  //
-      AVLTreeNode<T>* rotateRight(AVLTreeNode<T>* tNode);
+      AVLTreeNode<T>* rotateRight(AVLTreeNode<T>* tNode); //282
 
       //write and use methods to do each of the four rotations (SR, SL, DLR, DRL)
 
 	  //
-      AVLTreeNode<T>* DLR(AVLTreeNode<T>* tNode);
+      AVLTreeNode<T>* DLR(AVLTreeNode<T>* tNode); //288
 
 	  //
-      AVLTreeNode<T>* DRL(AVLTreeNode<T>* tNode);
+      AVLTreeNode<T>* DRL(AVLTreeNode<T>* tNode); //294
 	  
 	  
-      AVLTreeNode<T>* avlFixAddLeft(AVLTreeNode<T>* tNode);//
-	  
-	  //
-      AVLTreeNode<T>* avlFixAddRight(AVLTreeNode<T>* tNode);
+      AVLTreeNode<T>* avlFixAddLeft(AVLTreeNode<T>* tNode); //300
 	  
 	  //
-      AVLTreeNode<T>* avlFixRemoveLeft(AVLTreeNode<T>* tNode);
+      AVLTreeNode<T>* avlFixAddRight(AVLTreeNode<T>* tNode); //337
 	  
 	  //
-      AVLTreeNode<T>* avlFixRemoveRight(AVLTreeNode<T>* tNode);
+      AVLTreeNode<T>* avlFixRemoveLeft(AVLTreeNode<T>* tNode); //343
 	  
 	  //
-      AVLTreeNode<T>* DLR(AVLTreeNode<T>* tNode, AVLTreeNode<T>* left);  //changes balance factors, calls the other DLR to do two rotations
+      AVLTreeNode<T>* avlFixRemoveRight(AVLTreeNode<T>* tNode); //349
 	  
 	  //
-      AVLTreeNode<T>* DRL(AVLTreeNode<T>* tNode, AVLTreeNode<T>* right);  //changes balance factors, calls the other DRL to do two rotations
+      AVLTreeNode<T>* DLR(AVLTreeNode<T>* tNode, AVLTreeNode<T>* left); //355 //changes balance factors, calls the other DLR to do two rotations
+	  
+	  //
+      AVLTreeNode<T>* DRL(AVLTreeNode<T>* tNode, AVLTreeNode<T>* right); //361  //changes balance factors, calls the other DRL to do two rotations
 
       virtual void drawRec(AVLTreeNode<T>* tNode, wxDC&  dc, Line* line, int x_parent, int x_curr, int y_curr);
 
@@ -92,32 +92,27 @@ class AVLTree : public Drawable
 	  AVLTree(int (*comp_items) (T* item_1, T* item_2), int (*comp_keys) (String* key, T* item));//
       ~AVLTree();
 	
-	  //
-      int size(); //line 100
+      int size(); 
+	  
+      void insert(T* item);
 	  
 	  
-      void insert(T* item);//
-	  
-	  //
       void remove(String* sk);
 	  
-      T* retrieve(String* sk);//
+      T* retrieve(String* sk);
 
-      bool isEmpty();//
+      bool isEmpty();
 	  
-	  //
       void makeEmpty();
 	  
       T* getRootItem();
 	  
       AVLTreeIterator<T>* iterator();
 
-	  
       int getHeight();
 	  
       bool isBalanced();
 	  
-	  //
       bool checkBalanceFactors();
 		
 	  /////////////////////////////////////////
@@ -143,7 +138,7 @@ int AVLTree<T>::getHeight(AVLTreeNode<T>* tNode)
 {
    if (tNode == NULL)
    {
-       return 0;
+	   return 0;
    }
    else
    {
@@ -157,7 +152,7 @@ int AVLTree<T>::getHeight(AVLTreeNode<T>* tNode)
        else
        {
           return right + 1;
-       }
+       }	   
    }
 }
 
@@ -406,7 +401,7 @@ void AVLTree<T>::drawRec(AVLTreeNode<T>* tNode, wxDC& dc, Line* line, int x_pare
    }
 }
 
-//public
+/////////////////public
 template < class T >
 AVLTree<T>::AVLTree(int(*comp_items)(T* item_1, T* item_2), int(*comp_keys)(String* key, T* item))
 {
@@ -427,7 +422,7 @@ AVLTree<T>::~AVLTree()
 template < class T >
 int AVLTree<T>::size()
 {
-	
+	return sze;
 }
 
 template < class T >
@@ -514,7 +509,7 @@ bool AVLTree<T>:: isBalanced()
 template < class T >
 bool checkBalanceFactors()
 {
-	
+	return checkBalanceFactors(root);
 }
 
 //the below methods have been completed for you
