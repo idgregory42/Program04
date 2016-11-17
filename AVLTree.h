@@ -24,84 +24,107 @@ class AVLTree : public Drawable
 
       int (*compare_items) (T* item_1, T* item_2);
       int (*compare_keys) (String* key, T* item);
-
-      void setRootNode(AVLTreeNode<T>* tNode);  //you can get by without using these methods, refer to root directly
-      AVLTreeNode<T>* getRootNode();
+	  
+		
+      void setRootNode(AVLTreeNode<T>* tNode);  //you can get by without using these methods, refer to root directly//
+	  
+      AVLTreeNode<T>* getRootNode();//
+	  
       int getHeight(AVLTreeNode<T>* tNode);  //from lab
-      int isBalanced(AVLTreeNode<T>* tNode);
+	  
+	  
+      int isBalanced(AVLTreeNode<T>* tNode);//
+	  
+	  //
       bool checkBalanceFactors(AVLTreeNode<T>* tNode);
+	  
 
-      void destroyItem(AVLTreeNode<T>* tNode);
-      void destroy();
+      void destroyItem(AVLTreeNode<T>* tNode);//
+      void destroy();//
 
-      AVLTreeNode<T>* insertItem(AVLTreeNode<T>* tNode, T* item);
+      AVLTreeNode<T>* insertItem(AVLTreeNode<T>* tNode, T* item);//
+	  
+	  //
       AVLTreeNode<T>* removeItem(AVLTreeNode<T>* tNode, String* searchKey);
+	  //
       AVLTreeNode<T>* removeNode(AVLTreeNode<T>* tNode);
+	  //
       AVLTreeNode<T>* removeLeftMost(AVLTreeNode<T>* tNode);
+	  //
       T* findLeftMost(AVLTreeNode<T>* tNode);
-
+	  
+	  //
       AVLTreeNode<T>* rotateLeft(AVLTreeNode<T>* tNode);
+	  //
       AVLTreeNode<T>* rotateRight(AVLTreeNode<T>* tNode);
 
       //write and use methods to do each of the four rotations (SR, SL, DLR, DRL)
 
+	  //
       AVLTreeNode<T>* DLR(AVLTreeNode<T>* tNode);
-      AVLTreeNode<T>* DRL(AVLTreeNode<T>* tNode);
 
-      AVLTreeNode<T>* avlFixAddLeft(AVLTreeNode<T>* tNode);
+	  //
+      AVLTreeNode<T>* DRL(AVLTreeNode<T>* tNode);
+	  
+	  
+      AVLTreeNode<T>* avlFixAddLeft(AVLTreeNode<T>* tNode);//
+	  
+	  //
       AVLTreeNode<T>* avlFixAddRight(AVLTreeNode<T>* tNode);
+	  
+	  //
       AVLTreeNode<T>* avlFixRemoveLeft(AVLTreeNode<T>* tNode);
+	  
+	  //
       AVLTreeNode<T>* avlFixRemoveRight(AVLTreeNode<T>* tNode);
+	  
+	  //
       AVLTreeNode<T>* DLR(AVLTreeNode<T>* tNode, AVLTreeNode<T>* left);  //changes balance factors, calls the other DLR to do two rotations
+	  
+	  //
       AVLTreeNode<T>* DRL(AVLTreeNode<T>* tNode, AVLTreeNode<T>* right);  //changes balance factors, calls the other DRL to do two rotations
 
       virtual void drawRec(AVLTreeNode<T>* tNode, wxDC&  dc, Line* line, int x_parent, int x_curr, int y_curr);
 
    public:
-      AVLTree(int (*comp_items) (T* item_1, T* item_2), int (*comp_keys) (String* key, T* item));
+      
+	  
+	  AVLTree(int (*comp_items) (T* item_1, T* item_2), int (*comp_keys) (String* key, T* item));//
       ~AVLTree();
-
-      int size();
-      void insert(T* item);
+	
+	  //
+      int size(); //line 100
+	  
+	  
+      void insert(T* item);//
+	  
+	  //
       void remove(String* sk);
-      T* retrieve(String* sk);
+	  
+      T* retrieve(String* sk);//
 
-      bool isEmpty();
+      bool isEmpty();//
+	  
+	  //
       void makeEmpty();
+	  
       T* getRootItem();
+	  
       AVLTreeIterator<T>* iterator();
 
+	  
       int getHeight();
+	  
       bool isBalanced();
+	  
+	  //
       bool checkBalanceFactors();
-
+		
+	  /////////////////////////////////////////
       void draw(wxDC&  dc, int width, int height);
       void mouseClicked(int x, int y);
 
 };
-
-template < class T >
-AVLTree<T>::AVLTree(int(*comp_items)(T* item_1, T* item_2), int(*comp_keys)(String* key, T* item))
-{
-	sze == 0;
-	avlFlag = false;
-	root = NULL;
-	
-	compare_items = comp_items;
-	compare_keys = comp_keys;
-}
-
-template < class T >
-AVLTree<T>::~AVLTree()
-{
-	destroy();
-}
-
-template < class T >
-bool AVLTree<T>::isEmpty()
-{
-	return sze == 0;
-}
 
 template < class T >
 void AVLTree<T>::setRootNode(AVLTreeNode)
@@ -116,44 +139,26 @@ AVLTreeNode<T>* AVLTree<T>::getRootNode()
 }
 
 template < class T >
-T* AVLTree<T>::getRootItem()
-{
-	if(root == NULL) return NULL;
-	return root->getItem();
-}
-
-template < class T >
-AVLTreeIterator<T>* AVLTree<T>::iterator()
-{
-	AVLTreeIterator<T>* iter = new AVLTreeIterator<T>(root);
-	return iter;
-}
-
-template < class T >
 int AVLTree<T>::getHeight(AVLTreeNode<T>* tNode)
 {
-	if(tNode == NULL) return 0;
-	
-	AVLTree<T>* left = tNode->getLeft();
-	AVLTree<T>* right = tNode->getRight();
-	
-	int rHeight = getHeight(right);
-	int lHeight = getHeight(left);
-	
-	if(lHeight < rHeight)
-	{
-		return (rHeight + 1);
-	}
-	else
-	{
-		return (lHeight + 1);
-	}
-}
+   if (tNode == NULL)
+   {
+       return 0;
+   }
+   else
+   {
+       int left = getHeight(tNode->getLeft());
+       int right = getHeight(tNode->getRight());
 
-template < class T >
-int AVLTree<T>::getHeight()
-{
-	return getHeight(root);
+       if (left >= right)
+       {
+           return left + 1;
+       }
+       else
+       {
+          return right + 1;
+       }
+   }
 }
 
 template < class T >
@@ -164,49 +169,65 @@ bool AVLTree<T>::isBalanced(AVLTreeNode<T>* tNode)
 	AVLTreeNode<T>* left = tNode->getLeft();
 	AVLTreeNode<T>* right = tNode->getRight();
 	
-	bool lBal = isBalanced(left);
-	bool rBal = isBalanced(right);
+	bool left_Bal = isBalanced(left);
+	if(left_Bal == false) return false;
 	
-	if(!lBal || !rBal) return false;
+	bool right_Bal = isBalanced(right);
+	if(right_Bal == false) return false;
 	
 	int lh = getHeight(left);
 	int rh = getHeight(right);
-	
 	if(abs(lh-rh) > 1) return false;
 	
 	return true;
 }
 
 template < class T >
-bool AVLTree<T>:: isBalanced()
+bool AVLTree<T>::checkBalanceFactors(AVLTreeNode<T>* tNode)
 {
-	return isBalanced(root);
+	
+}
+
+template < class T >
+void AVLTree<T>::destroyItem(AVLTreeNode<T>* tNode)
+{
+   if (tNode != NULL)
+   {
+      destroyItem(tNode->getLeft());
+      destroyItem(tNode->getRight());
+      delete tNode;
+   }	
+}
+
+template < class T >
+void AVLTree<T>::destroy()
+{
+	destroyItem(root);
 }
 
 template < class T >
 AVLTreeNode<T>* AVLTree<T>::insertItem(AVLTreeNode<T>* tNode, T* item)
 {
+	AVLTreeNode<T>* sub;
 	if(tNode == NULL)
 	{
-		AVLTreeNode<T>* nn = new AVLTreeNode<T>(item);
 		avlFlag = true;
 		sze++;
-		return nn;
+		return new AVLTreeNode<T>(item);
 	}
 	
-	int compare = (*compare_items)(item, tNode->getItem());
+	T* node_items = tNode->getItem();
+	int comp = (*compare_items)(item, node_items);
 	
-	if(compare < 0)
+	if(comp < 0)
 	{
-		AVLTreeNode<T>* left = tNode->getLeft();
-		AVLTreeNode<T>* sub = insertItem(left, item);
+		sub = insertItem(tNode->getLeft(), item);
 		tNode->setLeft(sub);
 		if(avlFlag) tNode->insertLeft();
 	}
-	else if(compare > 0)
+	else if(comp > 0)
 	{
-		AVLTreeNode<T>* right = tNode->getRight();
-		AVLTreeNode<T>* sub = insertItem(right, item);
+		sub = insertItem(tNode->getRight(), item);
 		tNode->setRight(sub);
 		if(avlFlag) tNode->insertRight();
 	}
@@ -234,53 +255,51 @@ AVLTreeNode<T>* AVLTree<T>::insertItem(AVLTreeNode<T>* tNode, T* item)
 }
 
 template < class T >
-void AVLTree<T>::insert(T* item)
+AVLTreeNode<T>* AVLTree<T>::removeItem(AVLTreeNode<T>* tNode, String* searchKey)
 {
-	root = insertItem(root, item);
-	avlFlag = false;
-}
-
-template < class T >
-T* AVLTree<T>::retrieve(String* sk)
-{
-	AVLTreeNode<T>* curr = root;
 	
-	while(curr != NULL)
-	{
-		T* item = curr->getItem();
-		int compare = (*compare_keys)(sk, item);
-		if(compare > 0)
-		{
-			curr = curr->getRight();
-		}
-		else if(compare < 0)
-		{
-			curr = curr->getLeft();
-		}
-		else
-		{
-			return item;
-		}
-	}
-	return NULL;
 }
 
 template < class T >
-void AVLTree<T>::destroyItem(AVLTreeNode<T>* tNode)
+AVLTreeNode<T>* AVLTree<T>::removeNode(AVLTreeNode<T>* tNode)
 {
-	if(tNode == NULL) return;
-	destroyItem(tNode->getRight());
-	destroyItem(tNode->getLeft());
-	delete tNode;
+	
 }
 
 template < class T >
-void AVLTree<T>::destroy()
+AVLTreeNode<T>* AVLTree<T>::removeLeftMost(AVLTreeNode<T>* tNode)
 {
-	destroyItem(root);
-	root = NULL;
-	sze = 0;
-	avlFlag = false;
+	
+}
+
+template < class T >
+T* AVLTree<T>::findLeftMost(AVLTreeNode<T>* tNode)
+{
+	
+}
+
+template < class T >
+AVLTreeNode<T>* AVLTree<T>::rotateLeft(AVLTreeNode<T>* tNode)
+{
+	
+}
+
+template < class T >
+AVLTreeNode<T>* AVLTree<T>::rotateRight(AVLTreeNode<T>* tNode)
+{
+	
+}
+
+template < class T >
+AVLTreeNode<T>* AVLTree<T>::DLR(AVLTreeNode<T>* tNode)
+{
+	
+}
+
+template < class T >
+AVLTreeNode<T>* AVLTree<T>::DRL(AVLTreeNode<T>* tNode)
+{
+	
 }
 
 template < class T >
@@ -319,13 +338,35 @@ AVLTreeNode<T>* AVLTree<T>::avlFixAddLeft(AVLTreeNode<T>* tNode)
 	}
 	return sub;
 }
-//the below methods have been completed for you
 
 template < class T >
-void AVLTree<T>::draw(wxDC&  dc, int width, int height)
+AVLTreeNode<T>* AVLTree<T>::avlFixAddRight(AVLTreeNode<T>* tNode)
 {
-	Line line(new Color(0, 0, 0), 5.0);
-	drawRec(getRootNode(), dc, &line, width, width/2, 20);
+	
+}
+
+template < class T >
+AVLTreeNode<T>* AVLTree<T>::avlFixRemoveLeft(AVLTreeNode<T>* tNode)
+{
+	
+}
+
+template < class T >
+AVLTreeNode<T>* AVLTree<T>::avlFixRemoveRight(AVLTreeNode<T>* tNode)
+{
+	
+}
+
+template < class T >
+AVLTreeNode<T>* AVLTree<T>::DLR(AVLTreeNode<T>* tNode, AVLTreeNode<T>* left)
+{
+	
+}
+
+template < class T >
+AVLTreeNode<T>* AVLTree<T>::DRL(AVLTreeNode<T>* tNode, AVLTreeNode<T>* right)
+{
+	
 }
 
 template < class T >
@@ -364,6 +405,128 @@ void AVLTree<T>::drawRec(AVLTreeNode<T>* tNode, wxDC& dc, Line* line, int x_pare
       tNode->draw(dc, x_curr, y_curr);
    }
 }
+
+//public
+template < class T >
+AVLTree<T>::AVLTree(int(*comp_items)(T* item_1, T* item_2), int(*comp_keys)(String* key, T* item))
+{
+	sze == 0;
+	avlFlag = false;
+	root = NULL;
+	
+	compare_items = comp_items;
+	compare_keys = comp_keys;
+}
+
+template < class T >
+AVLTree<T>::~AVLTree()
+{
+	destroy();
+}
+
+template < class T >
+int AVLTree<T>::size()
+{
+	
+}
+
+template < class T >
+void AVLTree<T>::insert(T* item)
+{
+	root = insertItem(root, item);
+	avlFlag = false;
+}
+
+template < class T >
+void AVLTree<T>::remove(String* sk)
+{
+	root = removeItem(root, sk);	
+}
+
+template < class T >
+T* AVLTree<T>::retrieve(String* sk)
+{
+   AVLTreeNode<T>* tNode = getRootNode();
+
+   while (tNode != NULL)
+   {
+      T* node_items = tNode->getItem();
+      int comp = (*compare_keys) (sk, node_items);
+
+      if (comp == 0)
+      {
+		return node_items;
+      }
+      else if (comp < 0)
+      {
+        tNode = tNode->getLeft();
+      }
+      else
+      {
+        tNode = tNode->getRight();
+      }
+   }
+
+   return NULL;
+}
+
+template < class T >
+bool AVLTree<T>::isEmpty()
+{
+	return sze == 0;
+}
+
+template < class T >
+void AVLTree<T>::makeEmpty()
+{
+   destroy();
+   root == NULL;
+   sze = 0;	
+}
+
+template < class T >
+T* AVLTree<T>::getRootItem()
+{
+   T* rootItem = root->getItem();
+   return rootItem;
+}
+
+template < class T >
+AVLTreeIterator<T>* AVLTree<T>::iterator()
+{
+	AVLTreeIterator<T>* iter = new AVLTreeIterator<T>(root);
+	return iter;
+}
+
+template < class T >
+int AVLTree<T>::getHeight()
+{
+	return getHeight(getRootNode());
+}
+
+template < class T >
+bool AVLTree<T>:: isBalanced()
+{
+	bool bal = isBalanced(root);
+	return bal;
+}
+
+template < class T >
+bool checkBalanceFactors()
+{
+	
+}
+
+//the below methods have been completed for you
+
+template < class T >
+void AVLTree<T>::draw(wxDC&  dc, int width, int height)
+{
+	Line line(new Color(0, 0, 0), 5.0);
+	drawRec(getRootNode(), dc, &line, width, width/2, 20);
+}
+
+
 
 template < class T >
 void AVLTree<T>::mouseClicked(int x, int y) {}
