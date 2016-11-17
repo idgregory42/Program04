@@ -233,7 +233,92 @@ AVLTreeNode<T>* AVLTree<T>::insertItem(AVLTreeNode<T>* tNode, T* item)
 	return tNode;
 }
 
+template < class T >
+void AVLTree<T>::insert(T* item)
+{
+	root = insertItem(root, item);
+	avlFlag = false;
+}
 
+template < class T >
+T* AVLTree<T>::retrieve(String* sk)
+{
+	AVLTreeNode<T>* curr = root;
+	
+	while(curr != NULL)
+	{
+		T* item = curr->getItem();
+		int compare = (*compare_keys)(sk, item);
+		if(compare > 0)
+		{
+			curr = curr->getRight();
+		}
+		else if(compare < 0)
+		{
+			curr = curr->getLeft();
+		}
+		else
+		{
+			return item;
+		}
+	}
+	return NULL;
+}
+
+template < class T >
+void AVLTree<T>::destroyItem(AVLTreeNode<T>* tNode)
+{
+	if(tNode == NULL) return;
+	destroyItem(tNode->getRight());
+	destroyItem(tNode->getLeft());
+	delete tNode;
+}
+
+template < class T >
+void AVLTree<T>::destroy()
+{
+	destroyItem(root);
+	root = NULL;
+	sze = 0;
+	avlFlag = false;
+}
+
+template < class T >
+AVLTreeNode<T>* AVLTree<T>::avlFixAddLeft(AVLTreeNode<T>* tNode)
+{
+	AVLTreeNode<T>* left = tNode->getLeft();
+	AVLTreeNode<T>* sub;
+	if(left->getBalanceFactor() == LEFT_HEAVY)
+	{
+		sub = rotateRight(tNode);
+	}
+	else
+	{
+		AVLTreeNode<T>* lf = left->getRight();
+		tNode->setLeft(rotateLeft(left));
+		sub = rotateRight(tNode);
+		
+		if(lf->getBalanceFactor() == LEFT_HEAVY)
+		{
+			tNode->setBalanceFactor(RIGHT_HEAVY);
+			left->setBalanceFactor(BALANCED);
+			lf->setBalanceFactor(BALANCED);
+		}
+		else if (lf->getBalanceFactor() == RIGHT_HEAVY)
+		{
+			tNode->setBalanceFactor(BALANCED);
+			left->setBalanceFactor(LEFT_HEAVY);
+			lf->setBalanceFactor(BALANCED);
+		}
+		else
+		{
+			tNode->setBalanceFactor(BALANCED);
+			left->setBalanceFactor(BALANCED);
+			lf->setBalanceFactor(BALANCED);
+		}
+	}
+	return sub;
+}
 //the below methods have been completed for you
 
 template < class T >
