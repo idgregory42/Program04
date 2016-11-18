@@ -1,17 +1,3 @@
-Obscura
-Omnivium
-2011
-7
-9
-7:17,Septuagint
-4:13,Vortex Omnivium
-5:55,Ocean Gateways
-4:50,Euclidean Elements
-6:19,Prismal Dawn
-5:27,Celestial Spheres
-6:03,Velocity
-6:13,A Transcendental Serenade
-7:50,Aevum
 Kataklysm
 Waiting for the End to Come
 2013
@@ -43,6 +29,20 @@ Construct
 4:06,State of Trust
 4:55,Weight of the End
 4:32,None Becoming
+Obscura
+Omnivium
+2011
+7
+9
+7:17,Septuagint
+4:13,Vortex Omnivium
+5:55,Ocean Gateways
+4:50,Euclidean Elements
+6:19,Prismal Dawn
+5:27,Celestial Spheres
+6:03,Velocity
+6:13,A Transcendental Serenade
+7:50,Aevum
 Amon Amarth
 Surtur Rising
 2011
@@ -2934,15 +2934,15 @@ Collateral Defect
 2007
 9
 9
-2:29,Reflections
-3:29,Bloodwork
-3:10,Touch of Hate
-3:53,Suicide Code
-5:12,The Day I Die
-4:20,Fragile Side
-3:54,Out of Clouds
-3:56,Scars of Sorrow
-6:17,Memories
+2:29,Reflections 2:29
+3:29,Bloodwork 3:29
+3:10,Touch of Hate 3:10
+3:53,Suicide Code 3:53
+5:12,The Day I Die 5:12
+4:20,Fragile Side 4:20
+3:54,Out of Clouds 3:54
+3:56,Scars of Sorrow 3:56
+6:17,Memories 6:17
 Graveworm
 Engraved In Black
 2003

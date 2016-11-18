@@ -1,25 +1,26 @@
+#include "CD.h"
+using namespace CSC2110;
 #include "wx/wx.h"
 #include "wx/sizer.h"
 
-#include "2111/GUI/DrawPanel.h"
-#include "2111/GUI/ImageLoader.h"
+#include "DrawPanel.h"
+#include "ImageLoader.h"
 
 
-#include "2111/GUI/Circle.h"
-#include "2111/GUI/Line.h"
+#include "Circle.h"
+#include "Line.h"
+
 #include "AVLTree.h"
 #include "ListArray.h"
-#include "CD.h"
-using namespace CSC2110;
+
 
 class MyApp: public wxApp
 {
-	public:
-		
-		bool OnInit();
+    bool OnInit();
  
-        wxFrame* frame;
-        DrawPanel* drawPane;
+    wxFrame* frame;
+    DrawPanel* drawPane;
+public:
  
 };
  
@@ -37,15 +38,17 @@ bool MyApp::OnInit()
 	{
 		CD* cd = iter->next();
 		avl->insert(cd);
-		//bool bf_check = avl->checkBalanceFactors();
-		//if (!bf_check)
+		bool bf_check = avl->checkBalanceFactors();
+		//if(!bf_check)
 		//{
-			cd->displayCD();
-			exit(0);
+			//cd->displayCD();
+			//exit(0);			
 		//}
+		//cout << "Bal\n";
 	}
 	delete iter;
 	delete cds;
+	cout << "height: "<<avl->getHeight()<<endl;
    
     wxBoxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
     frame = new wxFrame((wxFrame *)NULL, -1,  wxT("AVL Tree"), wxPoint(500,500), wxSize(1100,600));

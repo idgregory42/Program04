@@ -68,7 +68,6 @@ CD::~CD()
 
 String* CD::getKey()
 {
-   //return artist;
    return title;
 }
 
