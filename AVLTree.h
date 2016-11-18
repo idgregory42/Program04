@@ -10,7 +10,6 @@
 #include "Line.h"
 
 #include <iostream>
-#include <stdlib.h>
 using namespace std;
 
 template < class T >
@@ -434,32 +433,32 @@ T* AVLTree<T>::findLeftMost(AVLTreeNode<T>* tNode)
 template < class T >
 AVLTreeNode<T>* AVLTree<T>::rotateLeft(AVLTreeNode<T>* tNode)
 {
-	AVLTreeNode<T>* r = tNode->getRight();
-	AVLTreeNode<T>* rl = r->getLeft();
+	AVLTreeNode<T>* _right = tNode->getRight();
+	AVLTreeNode<T>* rl = _right->getLeft();
 	
-    r->setLeft(tNode);
+    _right->setLeft(tNode);
 	tNode->setRight(rl);
 	
-	return r;
+	return _right;
 }
 
 template < class T >
 AVLTreeNode<T>* AVLTree<T>::rotateRight(AVLTreeNode<T>* tNode)
 {
-	AVLTreeNode<T>* l = tNode->getLeft();
-	AVLTreeNode<T>* lr = l->getRight();
+	AVLTreeNode<T>* _left = tNode->getLeft();
+	AVLTreeNode<T>* lr = _left->getRight();
 	
-	l->setRight(tNode);
+	_left->setRight(tNode);
 	tNode->setLeft(lr);
 	
-	return l;
+	return _left;
 }
 
 template < class T >
 AVLTreeNode<T>* AVLTree<T>::DLR(AVLTreeNode<T>* tNode)
 {
-	AVLTreeNode<T>* l = tNode->getLeft();
-	AVLTreeNode<T>* temp_node = rotateLeft(l);
+	AVLTreeNode<T>* _left = tNode->getLeft();
+	AVLTreeNode<T>* temp_node = rotateLeft(_left);
 	
 	tNode->setLeft(temp_node);
 	temp_node = rotateRight(tNode);
@@ -470,8 +469,8 @@ AVLTreeNode<T>* AVLTree<T>::DLR(AVLTreeNode<T>* tNode)
 template < class T >
 AVLTreeNode<T>* AVLTree<T>::DRL(AVLTreeNode<T>* tNode)
 {
-	AVLTreeNode<T>* r = tNode->getRight();
-	AVLTreeNode<T>* temp_node = rotateRight(r);
+	AVLTreeNode<T>* _right = tNode->getRight();
+	AVLTreeNode<T>* temp_node = rotateRight(_right);
 	
 	tNode->setRight(temp_node);
 	temp_node = rotateLeft(tNode);
@@ -491,17 +490,16 @@ AVLTreeNode<T>* AVLTree<T>::avlFixAddLeft(AVLTreeNode<T>* tNode)
 	
 	if(bal_fact == LEFT_UNBALANCED)
 	{
-		AVLTreeNode<T>* l = tNode->getLeft();
-		AVL left_bal_fact = l->getBalanceFactor();
+		AVLTreeNode<T>* _left = tNode->getLeft();
+		AVL left_bal_fact = _left->getBalanceFactor();
 		
-		
-		l->setBalanceFactor(BALANCED);
+		_left->setBalanceFactor(BALANCED);
 		tNode->setBalanceFactor(BALANCED);
 		
 		if(left_bal_fact == RIGHT_HEAVY)
 		{
 
-			tNode = DLR(tNode, l);
+			tNode = DLR(tNode, _left);
 		}
 		else
 		{
@@ -522,14 +520,15 @@ AVLTreeNode<T>* AVLTree<T>::avlFixAddRight(AVLTreeNode<T>* tNode)
    
    if(bal_fact == RIGHT_UNBALANCED)
    {
-	   AVLTreeNode<T>* r = tNode->getRight();
-       AVL right_bal_fact = r->getBalanceFactor();
-       r->setBalanceFactor(BALANCED);
+	   AVLTreeNode<T>* _right = tNode->getRight();
+       AVL right_bal_fact = _right->getBalanceFactor();
+	   
+       _right->setBalanceFactor(BALANCED);
 	   tNode->setBalanceFactor(BALANCED);
 
        if(right_bal_fact == LEFT_HEAVY)
        {
-		   tNode = DRL(tNode, r);
+		   tNode = DRL(tNode, _right);
        }
        else
        {
@@ -551,13 +550,12 @@ AVLTreeNode<T>* AVLTree<T>::avlFixRemoveLeft(AVLTreeNode<T>* tNode)
 
    if(bal_fact == RIGHT_UNBALANCED)
    {
-	   
-
 	   AVLTreeNode<T>* r = tNode->getRight();
        AVL right_bal_fact = r->getBalanceFactor();
 
        tNode->setBalanceFactor(BALANCED);
        r->setBalanceFactor(BALANCED);
+	   
 	   if(right_bal_fact == BALANCED)
 	   {
 		   tNode->setBalanceFactor(RIGHT_HEAVY);
