@@ -5,11 +5,12 @@
 #if !defined (AVLTREE_H)
 #define AVLTREE_H
 
-#include "2111/GUI/Drawable.h"
+#include "Drawable.h"
 #include "AVLTreeIterator.h"
 #include "Line.h"
 
 #include <iostream>
+#include <stdlib.h>
 using namespace std;
 
 template < class T >
@@ -18,10 +19,12 @@ class AVLTree : public Drawable
    
    private:
    
-      AVLTreeNode<T>* root;
+      
 
       bool avlFlag;
       int sze;
+	  
+	  AVLTreeNode<T>* root;
 
       int (*compare_items) (T* item_1, T* item_2);
       int (*compare_keys) (String* key, T* item);
@@ -54,7 +57,7 @@ class AVLTree : public Drawable
 		Pre :
 		Post:
 	  */	  
-      //bool checkBalanceFactors(AVLTreeNode<T>* tNode); //180
+      bool checkBalanceFactors(AVLTreeNode<T>* tNode); //180
 	  
 	  /*
 		Pre :
@@ -118,9 +121,6 @@ class AVLTree : public Drawable
 	  
       AVLTreeNode<T>* DRL(AVLTreeNode<T>* tNode); //294
 	  
-	  AVLTreeNode<T>* SL(AVLTreeNode<T>* tNode);
-	  
-	  AVLTreeNode<T>* SR(AVLTreeNode<T>* tNode);
 	  
 	  /*
 		Pre :
@@ -214,7 +214,7 @@ class AVLTree : public Drawable
 		Pre :
 		Post:
 	  */	  
-      //bool checkBalanceFactors();
+      bool checkBalanceFactors();
 		
 	  /////////////////////////////////////////
       void draw(wxDC&  dc, int width, int height);
@@ -237,24 +237,24 @@ AVLTreeNode<T>* AVLTree<T>::getRootNode()
 template < class T >
 int AVLTree<T>::getHeight(AVLTreeNode<T>* tNode)
 {
-   if (tNode == NULL)
-   {
-	   return 0;
-   }
-   else
-   {
-       int left = getHeight(tNode->getLeft());
-       int right = getHeight(tNode->getRight());
+	if (tNode == NULL)
+	{
+		return 0;
+	}
+	else
+	{
+		int left = getHeight(tNode->getLeft());
+		int right = getHeight(tNode->getRight());
 
-       if (left >= right)
-       {
-           return left + 1;
-       }
-       else
-       {
-          return right + 1;
-       }	   
-   }
+		if (left >= right)
+		{
+			return left + 1;
+		}
+		else
+		{
+			return right + 1;
+		}
+	}
 }
 
 template < class T >
@@ -278,13 +278,12 @@ int AVLTree<T>::isBalanced(AVLTreeNode<T>* tNode)
 	return true;
 }
 
-/*
 template < class T >
 bool AVLTree<T>::checkBalanceFactors(AVLTreeNode<T>* tNode)
 {
 	return isBalanced(tNode);
 }
-*/
+
 template < class T >
 void AVLTree<T>::destroyItem(AVLTreeNode<T>* tNode)
 {
@@ -305,14 +304,18 @@ void AVLTree<T>::destroy()
 template < class T >
 AVLTreeNode<T>* AVLTree<T>::insertItem(AVLTreeNode<T>* tNode, T* item)
 {
-	AVLTreeNode<T>* sub;
+	
 	if(tNode == NULL)
 	{
+		tNode = new AVLTreeNode<T>(item);
+		tNode->setBalanceFactor(BALANCED);
+
 		avlFlag = true;
 		sze++;
-		return new AVLTreeNode<T>(item);
+		return tNode;
 	}
 	
+	AVLTreeNode<T>* sub;
 	T* node_items = tNode->getItem();
 	int comp = (*compare_items)(item, node_items);
 	
@@ -320,34 +323,24 @@ AVLTreeNode<T>* AVLTree<T>::insertItem(AVLTreeNode<T>* tNode, T* item)
 	{
 		sub = insertItem(tNode->getLeft(), item);
 		tNode->setLeft(sub);
-		if(avlFlag) tNode->insertLeft();
+		if(avlFlag) 
+			tNode = avlFixAddLeft(tNode);
 	}
 	else if(comp > 0)
 	{
 		sub = insertItem(tNode->getRight(), item);
 		tNode->setRight(sub);
-		if(avlFlag) tNode->insertRight();
+		if(avlFlag)
+		{
+			tNode = avlFixAddRight(tNode);
+		}
 	}
 	else
 	{
 		return tNode;
 	}
 	
-	if(tNode->getBalanceFactor() == LEFT_UNBALANCED)
-	{
-		tNode = avlFixAddLeft(tNode);
-		avlFlag = false;
-	}
-	else if(tNode->getBalanceFactor() == RIGHT_UNBALANCED)
-	{
-		tNode = avlFixAddRight(tNode);
-		avlFlag = false;
-	}
-	else if(tNode->getBalanceFactor() == BALANCED)
-	{
-		avlFlag = false;
-	}
-	
+
 	return tNode;
 }
 
@@ -440,7 +433,7 @@ AVLTreeNode<T>* AVLTree<T>::removeLeftMost(AVLTreeNode<T>* tNode)
 template < class T >
 T* AVLTree<T>::findLeftMost(AVLTreeNode<T>* tNode)
 {
-   while(tNode->getLeft())
+   while(tNode->getLeft() != NULL)
    {
 	   tNode = tNode->getLeft();
    }
@@ -455,8 +448,9 @@ AVLTreeNode<T>* AVLTree<T>::rotateLeft(AVLTreeNode<T>* tNode)
 	AVLTreeNode<T>* r = tNode->getRight();
 	AVLTreeNode<T>* rl = r->getLeft();
 	
-	r->setLeft(tNode);
+    r->setLeft(tNode);
 	tNode->setRight(rl);
+	
 
 	return r;
 }
@@ -467,9 +461,9 @@ AVLTreeNode<T>* AVLTree<T>::rotateRight(AVLTreeNode<T>* tNode)
 	
 	AVLTreeNode<T>* l = tNode->getLeft();
 	AVLTreeNode<T>* lr = l->getRight();
-	
 	l->setRight(tNode);
 	tNode->setLeft(lr);
+	
 	
 	return l;
 }
@@ -505,25 +499,27 @@ AVLTreeNode<T>* AVLTree<T>::avlFixAddLeft(AVLTreeNode<T>* tNode)
 
 	if(bal_fact == BALANCED)
 	{
-		avlFlag == false;
+		avlFlag = false;
 	}
 	else if(bal_fact == LEFT_UNBALANCED)
 	{
 		AVLTreeNode<T>* l = tNode->getLeft();
 		AVL left_bal_fact = l->getBalanceFactor();
 		
-		tNode->setBalanceFactor(BALANCED);
+		
 		l->setBalanceFactor(BALANCED);
-
+		tNode->setBalanceFactor(BALANCED);
 		
 		if(left_bal_fact == RIGHT_HEAVY)
 		{
+
 			tNode = DLR(tNode, l);
 		}
 		else
 		{
 			tNode = rotateRight(tNode);
 		}
+		
 		avlFlag = false;
 	}
 	return tNode;
@@ -544,18 +540,19 @@ AVLTreeNode<T>* AVLTree<T>::avlFixAddRight(AVLTreeNode<T>* tNode)
       AVLTreeNode<T>* r = tNode->getRight();
       AVL right_bal_fact = r->getBalanceFactor();
 
-      tNode->setBalanceFactor(BALANCED);
-      r->setBalanceFactor(BALANCED);
+	
+    r->setBalanceFactor(BALANCED);
+	tNode->setBalanceFactor(BALANCED);
 
       if (right_bal_fact == LEFT_HEAVY)
       {
         tNode = DRL(tNode, r);
       }
-      else 
+      else
       {
         tNode = rotateLeft(tNode);
       }
-
+		
       avlFlag = false; 
    }
 
@@ -574,29 +571,30 @@ AVLTreeNode<T>* AVLTree<T>::avlFixRemoveLeft(AVLTreeNode<T>* tNode)
    }
    else if (bal_fact == RIGHT_UNBALANCED)
    {
-      AVLTreeNode<T>* r = tNode->getRight();
+
+	  AVLTreeNode<T>* r = tNode->getRight();
       AVL right_bal_fact = r->getBalanceFactor();
 
       tNode->setBalanceFactor(BALANCED);
       r->setBalanceFactor(BALANCED);
 
-       if (right_bal_fact == BALANCED) 
-       {
-			tNode->setBalanceFactor(RIGHT_HEAVY);
-			r->setBalanceFactor(LEFT_HEAVY);
-			tNode = rotateLeft(tNode);
-			avlFlag = false;  
-       }
+      if (right_bal_fact == BALANCED) 
+      {
+		  tNode->setBalanceFactor(RIGHT_HEAVY);
+		  r->setBalanceFactor(LEFT_HEAVY);
+		  tNode = rotateLeft(tNode);
+		  avlFlag = false;
+      }
       else if (right_bal_fact == RIGHT_HEAVY)
       {
-			tNode = rotateLeft(tNode);
+		  tNode = rotateLeft(tNode);
       }
       else
       {
-			tNode = DRL(tNode, right);
+		  tNode = DRL(tNode, right);
       }
    }
-
+   
    return tNode;	
 }
 
@@ -608,7 +606,7 @@ AVLTreeNode<T>* AVLTree<T>::avlFixRemoveRight(AVLTreeNode<T>* tNode)
 
    if (bal_fact == LEFT_HEAVY)
    {
-      avlFlag = false;
+	   avlFlag = false;
    }
    else if (bal_fact == LEFT_UNBALANCED)
    {
@@ -620,18 +618,18 @@ AVLTreeNode<T>* AVLTree<T>::avlFixRemoveRight(AVLTreeNode<T>* tNode)
 
       if (left_bal_fact == BALANCED)
       {
-			tNode->setBalanceFactor(LEFT_HEAVY);
-			l->setBalanceFactor(RIGHT_HEAVY);
-			tNode = rotateRight(tNode);
-			avlFlag = false;  
+		  tNode->setBalanceFactor(LEFT_HEAVY);
+		  l->setBalanceFactor(RIGHT_HEAVY);
+		  tNode = rotateRight(tNode);
+		  avlFlag = false;
       }
       else if (left_bal_fact == LEFT_HEAVY)
       {
-			tNode = rotateRight(tNode);
+		  tNode = rotateRight(tNode);
       }
       else 
       {
-			tNode = DLR(tNode, left);
+		  tNode = DLR(tNode, left);
       }
    }
 
@@ -641,42 +639,45 @@ AVLTreeNode<T>* AVLTree<T>::avlFixRemoveRight(AVLTreeNode<T>* tNode)
 template < class T >
 AVLTreeNode<T>* AVLTree<T>::DLR(AVLTreeNode<T>* tNode, AVLTreeNode<T>* left)
 {
-	AVLTreeNode<T>* lr = left->getRight();
-	AVL bal_fact = lr->getBalanceFactor();
-	lr->setBalanceFactor(BALANCED);
+	AVLTreeNode<T>* leftRight = left->getRight();
+    AVL LRBF = leftRight->getBalanceFactor();
+    leftRight->setBalanceFactor(BALANCED);
 
-	if (bal_fact == LEFT_HEAVY)
-	{
-		tNode->setBalanceFactor(RIGHT_HEAVY);
-	}
-	else if (bal_fact == RIGHT_HEAVY)
-	{
-		left->setBalanceFactor(LEFT_HEAVY);    
-	}
+    if (LRBF == LEFT_HEAVY)
+    {
+       
+	   tNode->setBalanceFactor(RIGHT_HEAVY);    
+    }
+    else if(LRBF == RIGHT_HEAVY)
+    {
+       left->setBalanceFactor(LEFT_HEAVY);
+    }
 
-	tNode = DLR(tNode);
-
-	return tNode;	
+    tNode = DLR(tNode);
+    cout << "DLR" << endl;
+    return tNode;
 }
 
 template < class T >
 AVLTreeNode<T>* AVLTree<T>::DRL(AVLTreeNode<T>* tNode, AVLTreeNode<T>* right)
 {
-	AVLTreeNode<T>* rl = right->getLeft();
-	AVL bal_fact = rl->getBalanceFactor();
-	rl->setBalanceFactor(BALANCED);
-	
-	if(bal_fact == RIGHT_HEAVY)
-	{
-		tNode->setBalanceFactor(LEFT_HEAVY);
-	}
-	else if(bal_fact == LEFT_HEAVY)
-	{
-		right->setBalanceFactor(RIGHT_HEAVY);
-	}
-	
-	tNode = DRL(tNode);
-	return tNode;
+   AVLTreeNode<T>* rightLeft = right->getLeft();
+   AVL RLBF = rightLeft->getBalanceFactor();
+   rightLeft->setBalanceFactor(BALANCED);
+
+   if (RLBF == LEFT_HEAVY)
+   {
+      
+	  right->setBalanceFactor(RIGHT_HEAVY);
+   }
+   else if(RLBF == RIGHT_HEAVY)
+   {
+      tNode->setBalanceFactor(LEFT_HEAVY);
+   }
+
+   tNode = DRL(tNode);
+   cout << "DRL" << endl;
+   return tNode;
 }
 
 template < class T >
@@ -716,7 +717,6 @@ void AVLTree<T>::drawRec(AVLTreeNode<T>* tNode, wxDC& dc, Line* line, int x_pare
    }
 }
 
-/////////////////public
 template < class T >
 AVLTree<T>::AVLTree(int(*comp_items)(T* item_1, T* item_2), int(*comp_keys)(String* key, T* item))
 {
@@ -782,7 +782,7 @@ T* AVLTree<T>::retrieve(String* sk)
 template < class T >
 bool AVLTree<T>::isEmpty()
 {
-	return sze == 0;
+	return (sze == 0);
 }
 
 template < class T >
@@ -796,8 +796,7 @@ void AVLTree<T>::makeEmpty()
 template < class T >
 T* AVLTree<T>::getRootItem()
 {
-   T* rootItem = root->getItem();
-   return rootItem;
+   return root->getItem();
 }
 
 template < class T >
@@ -809,23 +808,21 @@ AVLTreeIterator<T>* AVLTree<T>::iterator()
 template < class T >
 int AVLTree<T>::getHeight()
 {
-	return getHeight(getRootNode());
+	return getHeight(root);
 }
 
 template < class T >
-bool AVLTree<T>:: isBalanced()
+bool AVLTree<T>::isBalanced()
 {
-	bool bal = isBalanced(root);
-	return bal;
+	return isBalanced(root);
 }
-/*
+
 template < class T >
-bool checkBalanceFactors()
+bool AVLTree<T>::checkBalanceFactors()
 {
-	bool bal = true;
-	return bal;
+	return checkBalanceFactors(root);
 }
-*/
+
 //the below methods have been completed for you
 
 template < class T >
