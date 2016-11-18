@@ -5,7 +5,7 @@
 #if !defined (AVLTREE_H)
 #define AVLTREE_H
 
-#include "Drawable.h"
+#include "2111/GUI/Drawable.h"
 #include "AVLTreeIterator.h"
 #include "Line.h"
 
@@ -17,6 +17,7 @@ class AVLTree : public Drawable
 {
    
    private:
+   
       AVLTreeNode<T>* root;
 
       bool avlFlag;
@@ -53,7 +54,7 @@ class AVLTree : public Drawable
 		Pre :
 		Post:
 	  */	  
-      bool checkBalanceFactors(AVLTreeNode<T>* tNode); //180
+      //bool checkBalanceFactors(AVLTreeNode<T>* tNode); //180
 	  
 	  /*
 		Pre :
@@ -213,7 +214,7 @@ class AVLTree : public Drawable
 		Pre :
 		Post:
 	  */	  
-      bool checkBalanceFactors();
+      //bool checkBalanceFactors();
 		
 	  /////////////////////////////////////////
       void draw(wxDC&  dc, int width, int height);
@@ -222,7 +223,7 @@ class AVLTree : public Drawable
 };
 
 template < class T >
-void AVLTree<T>::setRootNode(AVLTreeNode)
+void AVLTree<T>::setRootNode(AVLTreeNode<T>* tNode)
 {
 	root = tNode;
 }
@@ -257,7 +258,7 @@ int AVLTree<T>::getHeight(AVLTreeNode<T>* tNode)
 }
 
 template < class T >
-bool AVLTree<T>::isBalanced(AVLTreeNode<T>* tNode)
+int AVLTree<T>::isBalanced(AVLTreeNode<T>* tNode)
 {
 	if(tNode == NULL) return true;
 	
@@ -277,12 +278,13 @@ bool AVLTree<T>::isBalanced(AVLTreeNode<T>* tNode)
 	return true;
 }
 
+/*
 template < class T >
 bool AVLTree<T>::checkBalanceFactors(AVLTreeNode<T>* tNode)
 {
 	return isBalanced(tNode);
 }
-
+*/
 template < class T >
 void AVLTree<T>::destroyItem(AVLTreeNode<T>* tNode)
 {
@@ -357,23 +359,23 @@ AVLTreeNode<T>* AVLTree<T>::removeItem(AVLTreeNode<T>* tNode, String* searchKey)
 	AVLTreeNode<T>* sub;
 	T* item = tNode->getItem();
 	
-	int comp = (*compare_keys)(sk, item);
+	int comp = (*compare_keys)(searchKey, item);
 	
 	if (comp > 0)
 	{
-		sub = removeItem(tNode->getRight(), sk);
+		sub = removeItem(tNode->getRight(), searchKey);
 		tNode->setRight(sub);
 		if(avlFlag) tNode = avlFixRemoveRight(tNode);
 	}
 	else if (comp < 0)
 	{
-		sub = removeItem(tNode->getLeft(), sk);
+		sub = removeItem(tNode->getLeft(), searchKey);
 		tNode->setLeft(sub);
-		if(AVLFlag) tNode = avlFixRemoveLeft(tNode);
+		if(avlFlag) tNode = avlFixRemoveLeft(tNode);
 	}
 	else
 	{
-		AVLFlag = true;
+		avlFlag = true;
 		tNode = removeNode(tNode);
 		sze--;
 	}
@@ -409,7 +411,7 @@ AVLTreeNode<T>* AVLTree<T>::removeNode(AVLTreeNode<T>* tNode)
 	   tNode->setItem(temps);
 	   AVLTreeNode<T>* sub = removeLeftMost(tNode->getRight());
 	   tNode->setRight(sub);
-	   if(AVLFlag) tNode = avlFixRemoveRight(tNode);
+	   if(avlFlag) tNode = avlFixRemoveRight(tNode);
 	   return tNode;
    }	
 }
@@ -449,8 +451,9 @@ T* AVLTree<T>::findLeftMost(AVLTreeNode<T>* tNode)
 template < class T >
 AVLTreeNode<T>* AVLTree<T>::rotateLeft(AVLTreeNode<T>* tNode)
 {
-	AVLTreeNode<T>* rl = right->getLeft();
+	
 	AVLTreeNode<T>* r = tNode->getRight();
+	AVLTreeNode<T>* rl = r->getLeft();
 	
 	r->setLeft(tNode);
 	tNode->setRight(rl);
@@ -461,8 +464,9 @@ AVLTreeNode<T>* AVLTree<T>::rotateLeft(AVLTreeNode<T>* tNode)
 template < class T >
 AVLTreeNode<T>* AVLTree<T>::rotateRight(AVLTreeNode<T>* tNode)
 {
-	AVLTreeNode<T>* lr = left->getRight();
+	
 	AVLTreeNode<T>* l = tNode->getLeft();
+	AVLTreeNode<T>* lr = l->getRight();
 	
 	l->setRight(tNode);
 	tNode->setLeft(lr);
@@ -717,7 +721,6 @@ template < class T >
 AVLTree<T>::AVLTree(int(*comp_items)(T* item_1, T* item_2), int(*comp_keys)(String* key, T* item))
 {
 	sze == 0;
-	avlFlag = false;
 	root = NULL;
 	
 	compare_items = comp_items;
@@ -815,13 +818,14 @@ bool AVLTree<T>:: isBalanced()
 	bool bal = isBalanced(root);
 	return bal;
 }
-
+/*
 template < class T >
 bool checkBalanceFactors()
 {
-	return checkBalanceFactors(root);
+	bool bal = true;
+	return bal;
 }
-
+*/
 //the below methods have been completed for you
 
 template < class T >

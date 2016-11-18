@@ -20,7 +20,7 @@ class Keyboard
 //pre: the string (character literal) that will prompt the user for input
 //post: the input read from the keyboard interpreted as an int is returned
 int readInt(string prompt);
-int getValidatedInt(string prompt, int min, int max);
+int getValidatedInt(string prompt, String* min, String* max);
 
 //pre: the string that will prompt the user for input
 //post: the input read from the keyboard interpreted as a double is returned

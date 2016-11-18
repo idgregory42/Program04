@@ -23,6 +23,7 @@ class String
       float a_to_f();
       static String* i_to_a(int number);
       static String* f_to_a(float number);
+	  static String* d_to_a(double number);
 
 //find the location of a particular character in a String and return the index if found
 //preconditions:

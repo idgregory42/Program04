@@ -55,8 +55,10 @@ int String::compare(String* other)
 
 void String::displayString()
 {
+ 
    cout << text;
 }
+
 
 int String::find(char delimiter, int start)
 {
@@ -107,6 +109,7 @@ float String::a_to_f()
    return atof(text);
 }
 
+
 String* String::i_to_a(int number)
 {
    stringstream out;
@@ -125,4 +128,14 @@ String* String::f_to_a(float number)
    String* str = new String(text);
    delete text;
    return str;
+}
+
+String* String::d_to_a(double number)
+{
+	stringstream out;
+	out << number;
+	const char* text = out.str().c_str();
+	String* str = new String(text);
+	delete text;
+	return str;
 }

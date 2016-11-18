@@ -1,5 +1,5 @@
-@echo off
-cls
+
+
 
 set CXXFLAGS=-g -O0
 
@@ -29,6 +29,8 @@ g++ %CXXFLAGS% -c Integer.cpp
 g++ %CXXFLAGS% -c Double.cpp
 g++ %CXXFLAGS% -c HighPerformanceCounter.cpp
 g++ %CXXFLAGS% -c Permutation.cpp
+g++ %CXXFLAGS% -c Keywait.cpp
+g++ %CXXFLAGS% -c Valtostr.cpp
 
 IF EXIST "libCSC2110.a" (
 	move "libCSC2110.a" "libCSC2110.a.old"
@@ -39,6 +41,5 @@ ar -r libCSC2110.a *.o
 del *.o
 
 
+pause
 
-
-exit

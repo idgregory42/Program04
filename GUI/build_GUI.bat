@@ -31,4 +31,4 @@ del *.o
 
 
 
-exit
+::exit

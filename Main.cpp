@@ -14,11 +14,12 @@ using namespace CSC2110;
 
 class MyApp: public wxApp
 {
-    bool OnInit();
+	public:
+		
+		bool OnInit();
  
-    wxFrame* frame;
-    DrawPanel* drawPane;
-public:
+        wxFrame* frame;
+        DrawPanel* drawPane;
  
 };
  
@@ -36,12 +37,12 @@ bool MyApp::OnInit()
 	{
 		CD* cd = iter->next();
 		avl->insert(cd);
-		bool bf_check = avl->checkBalanceFactors();
-		if (!bf_check)
-		{
+		//bool bf_check = avl->checkBalanceFactors();
+		//if (!bf_check)
+		//{
 			cd->displayCD();
 			exit(0);
-		}
+		//}
 	}
 	delete iter;
 	delete cds;
