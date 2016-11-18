@@ -1,12 +1,12 @@
 #include "wx/wx.h"
 #include "wx/sizer.h"
 
-#include "DrawPanel.h"
-#include "ImageLoader.h"
+#include "2111/GUI/DrawPanel.h"
+#include "2111/GUI/ImageLoader.h"
 
 
-#include "Circle.h"
-#include "Line.h"
+#include "2111/GUI/Circle.h"
+#include "2111/GUI/Line.h"
 #include "AVLTree.h"
 #include "ListArray.h"
 #include "CD.h"
