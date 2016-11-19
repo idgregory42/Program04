@@ -1,3 +1,10 @@
+/*
+	Name       : Ian David Gregory
+	Class      : CSC 2110-002
+	Date       : 11-18-2016
+	Instructor : Dr. Brown
+*/
+
 #if !defined (NULL)
 #define NULL 0
 #endif
@@ -28,116 +35,122 @@ class AVLTree : public Drawable
 	  
 	  /*
 		Pre :
-		Post:
+		Post: Sets root to node
 	  */	  
-      void setRootNode(AVLTreeNode<T>* tNode); //123	  //you can get by without using these methods, refer to root directly//
+      void setRootNode(AVLTreeNode<T>* tNode); 	  //you can get by without using these methods, refer to root directly
 	  
 	  /*
 		Pre :
-		Post:
+		Post: Returns the root
 	  */	  
-      AVLTreeNode<T>* getRootNode(); //130
+      AVLTreeNode<T>* getRootNode(); 
 	  
 	  /*
 		Pre :
-		Post:
+		Post: Returns height from node
 	  */	  
-      int getHeight(AVLTreeNode<T>* tNode);  //136
+      int getHeight(AVLTreeNode<T>* tNode);
 	  
 	  /*
 		Pre :
-		Post:
+		Post: Returns if balanced or not
 	  */	  
-      int isBalanced(AVLTreeNode<T>* tNode); //159
+      int isBalanced(AVLTreeNode<T>* tNode);
 	  
 	  /*
 		Pre :
-		Post:
+		Post: Checks if balanced
 	  */	  
-      bool checkBalanceFactors(AVLTreeNode<T>* tNode); //180
+      bool checkBalanceFactors(AVLTreeNode<T>* tNode);
 	  
 	  /*
 		Pre :
-		Post:
+		Post: Removes all the items from tree
 	  */	  
-      void destroyItem(AVLTreeNode<T>* tNode); //186
+      void destroyItem(AVLTreeNode<T>* tNode);
 
 	  /*
 		Pre :
-		Post:
+		Post: Removes items from the root
 	  */	  
-      void destroy(); //197
+      void destroy();
 
 	  /*
 		Pre :
-		Post:
+		Post: Returns the node of the item added
 	  */	  
-      AVLTreeNode<T>* insertItem(AVLTreeNode<T>* tNode, T* item); //204
+      AVLTreeNode<T>* insertItem(AVLTreeNode<T>* tNode, T* item); 
 
 	  /*
-		Pre :
-		Post:
+		 Got this from the Program 5 files
 	  */	  
-      AVLTreeNode<T>* removeItem(AVLTreeNode<T>* tNode, String* searchKey); //252
+      AVLTreeNode<T>* removeItem(AVLTreeNode<T>* tNode, String* searchKey);
 
 	  /*
-		Pre :
-		Post:
+		 Got this from the Program 5 files
 	  */	  
-      AVLTreeNode<T>* removeNode(AVLTreeNode<T>* tNode); //258
+      AVLTreeNode<T>* removeNode(AVLTreeNode<T>* tNode);
 
 	  /*
-		Pre :
-		Post:
+		 Got this from the Program 5 files
 	  */	  
-      AVLTreeNode<T>* removeLeftMost(AVLTreeNode<T>* tNode); //264
+      AVLTreeNode<T>* removeLeftMost(AVLTreeNode<T>* tNode);
 
 	  /*
-		Pre :
-		Post:
+		 Got this from the Program 5 files
 	  */	  
-      T* findLeftMost(AVLTreeNode<T>* tNode); //270
+      T* findLeftMost(AVLTreeNode<T>* tNode);
 	  
 	  /*
 		Pre :
-		Post:
+		Post: Returns node after rotation
 	  */	  	  
-      AVLTreeNode<T>* rotateLeft(AVLTreeNode<T>* tNode); //276
+      AVLTreeNode<T>* rotateLeft(AVLTreeNode<T>* tNode);
 	  
 	  /*
 		Pre :
-		Post:
+		Post: Return node after rotation
 	  */	  	  
-      AVLTreeNode<T>* rotateRight(AVLTreeNode<T>* tNode); //282
+      AVLTreeNode<T>* rotateRight(AVLTreeNode<T>* tNode);
 
       //write and use methods to do each of the four rotations (SR, SL, DLR, DRL)
 
-	  
-      AVLTreeNode<T>* DLR(AVLTreeNode<T>* tNode); //288
+	  /*
+		Pre :
+		Post: Returns node after 2 rotations
+	  */	  	  	  
+      AVLTreeNode<T>* DLR(AVLTreeNode<T>* tNode);
 
-	  
-      AVLTreeNode<T>* DRL(AVLTreeNode<T>* tNode); //294
+	  /*
+		Pre :
+		Post: Returns node after 2 rotations
+	  */	  	  	  
+      AVLTreeNode<T>* DRL(AVLTreeNode<T>* tNode);
 	  
 	  
 	  /*
 		Pre :
-		Post:
+		Post: Returns node when the rotations are complete
 	  */	  
       AVLTreeNode<T>* avlFixAddLeft(AVLTreeNode<T>* tNode);
 	  
-
+	  /*
+		Pre :
+		Post: Returns node when the rotations are complete
+	  */
       AVLTreeNode<T>* avlFixAddRight(AVLTreeNode<T>* tNode); 
 	  
-	
+	  /*
+		 Got this from the Program 5 files
+	  */	  
       AVLTreeNode<T>* avlFixRemoveLeft(AVLTreeNode<T>* tNode);
 	  
-
+	  /*
+		 Got this from the Program 5 files
+	  */	  
       AVLTreeNode<T>* avlFixRemoveRight(AVLTreeNode<T>* tNode);
 	  
-
       AVLTreeNode<T>* DLR(AVLTreeNode<T>* tNode, AVLTreeNode<T>* left); //changes balance factors, calls the other DLR to do two rotations
-	  
-
       AVLTreeNode<T>* DRL(AVLTreeNode<T>* tNode, AVLTreeNode<T>* right); //changes balance factors, calls the other DRL to do two rotations
 
       virtual void drawRec(AVLTreeNode<T>* tNode, wxDC&  dc, Line* line, int x_parent, int x_curr, int y_curr);
@@ -149,67 +162,63 @@ class AVLTree : public Drawable
 	  
 	  /*
 		Pre :
-		Post:
+		Post: Returns size
 	  */
 	  int size(); 
 	  
 	  /*
 		Pre :
-		Post:
+		Post:  insert an item in the tree
 	  */	  
 	  void insert(T* item);
 
 	  /*
 		Pre :
-		Post:
+		Post: removes the key given from the tree
 	  */	  
 	  void remove(String* sk);
 
 	  /*
 		Pre :
-		Post:
+		Post: returns the item given
 	  */	  
       T* retrieve(String* sk);
 
 	  /*
 		Pre :
-		Post:
+		Post: returns if tree is empty or not
 	  */	  
       bool isEmpty();
 
 	  /*
 		Pre :
-		Post:
+		Post:  removes everything from the tree
 	  */	  
       void makeEmpty();
 	  
 	  /*
 		Pre :
-		Post:
+		Post: Returns the root item
 	  */	  
       T* getRootItem();
 	  
-	  /*
-		Pre :
-		Post:
-	  */	  
       AVLTreeIterator<T>* iterator();
 
 	  /*
 		Pre :
-		Post:
+		Post: Return the height of the sub tree
 	  */	  
       int getHeight();
 	  
 	  /*
 		Pre :
-		Post:
+		Post: returns if balance or not
 	  */	  
       bool isBalanced();
 	  
 	  /*
 		Pre :
-		Post:
+		Post: returns if node is balanced or not
 	  */	  
       bool checkBalanceFactors();
 		
@@ -371,52 +380,60 @@ AVLTreeNode<T>* AVLTree<T>::removeItem(AVLTreeNode<T>* tNode, String* searchKey)
 template < class T >
 AVLTreeNode<T>* AVLTree<T>::removeNode(AVLTreeNode<T>* tNode)
 {
-   if(tNode->getLeft() == NULL && tNode->getRight() == NULL)
+   T* replacement_item;
+
+   if ((tNode->getLeft() == NULL) && (tNode->getRight() == NULL)) 
    {
-	   	delete tNode;
-        return NULL;
-   }
-   else if(tNode->getLeft() == NULL)
+      delete tNode;
+      return NULL;
+   }  
+   else if (tNode->getLeft() == NULL) 
    {
-	   	AVLTreeNode<T>* temp_node = tNode->getRight();
-	    delete tNode;
-	    return temp_node;
-   }
-   else if(tNode->getRight() == NULL)
+      AVLTreeNode<T>* temp = tNode->getRight();
+      delete tNode;
+      return temp;
+   } 
+   else if (tNode->getRight() == NULL) 
    {
-	    AVLTreeNode<T>* temp_node = tNode->getLeft();
-        delete tNode;
-        return temp_node;
-   }
+      AVLTreeNode<T>* temp = tNode->getLeft();
+      delete tNode;
+      return temp;
+   }  
    else 
    {
-	   	AVLTreeNode<T>* temp_node = tNode->getRight();
-	    T* temps = findLeftMost(temp_node);
-	    tNode->setItem(temps);
-	    AVLTreeNode<T>* sub = removeLeftMost(tNode->getRight());
-	    tNode->setRight(sub);
-	    if(avlFlag) tNode = avlFixRemoveRight(tNode);
-	    return tNode;
-   }	
+      replacement_item = findLeftMost(tNode->getRight());
+      tNode->setItem(replacement_item);
+      tNode->setRight(removeLeftMost(tNode->getRight()));
+      if (avlFlag)
+      {
+         tNode = avlFixRemoveRight(tNode);
+      }
+      return tNode;
+   }  
 }
 
 template < class T >
 AVLTreeNode<T>* AVLTree<T>::removeLeftMost(AVLTreeNode<T>* tNode)
 {
-	AVLTreeNode<T>* sub;
-	if(tNode->getLeft() == NULL)
-	{
-		avlFlag = true;
-		sub = tNode->getRight();
-		delete tNode;
-		return sub;
-	}
+   AVLTreeNode<T>* subtree;
 
-	sub = removeLeftMost(tNode->getLeft());
-	tNode->setLeft(sub);
-	if(avlFlag) tNode = avlFixRemoveLeft(tNode);
-	
-	return tNode;
+   if (tNode->getLeft() == NULL) 
+   {
+      avlFlag = true;
+      subtree = tNode->getRight();
+      delete tNode;
+      return subtree;
+   }
+   else 
+   {
+      subtree = removeLeftMost(tNode->getLeft());
+      tNode->setLeft(subtree);
+      if (avlFlag)
+      {
+         tNode = avlFixRemoveLeft(tNode);
+      }
+      return tNode;
+   }  
 }
 
 template < class T >
@@ -426,8 +443,7 @@ T* AVLTree<T>::findLeftMost(AVLTreeNode<T>* tNode)
    {
 	   tNode = tNode->getLeft();
    }
-   T* item = tNode->getItem();
-   return item;	
+   return tNode->getItem();	
 }
 
 template < class T >
@@ -543,73 +559,77 @@ AVLTreeNode<T>* AVLTree<T>::avlFixAddRight(AVLTreeNode<T>* tNode)
 template < class T >
 AVLTreeNode<T>* AVLTree<T>::avlFixRemoveLeft(AVLTreeNode<T>* tNode)
 {
-   tNode->deleteLeft();
-   AVL bal_fact = tNode->getBalanceFactor();
+   tNode->removeLeft();
+   AVL factor = tNode->getBalanceFactor();
 
-   if(bal_fact == RIGHT_HEAVY) avlFlag = false;
-
-   if(bal_fact == RIGHT_UNBALANCED)
+   if (factor == RIGHT_HEAVY)
    {
-	   AVLTreeNode<T>* r = tNode->getRight();
-       AVL right_bal_fact = r->getBalanceFactor();
-
-       tNode->setBalanceFactor(BALANCED);
-       r->setBalanceFactor(BALANCED);
-	   
-	   if(right_bal_fact == BALANCED)
-	   {
-		   tNode->setBalanceFactor(RIGHT_HEAVY);
-		   r->setBalanceFactor(LEFT_HEAVY);
-		   tNode = rotateLeft(tNode);
-		   avlFlag = false;
-	   }
-	   else if(right_bal_fact == RIGHT_HEAVY)
-	   {
-		   tNode = rotateLeft(tNode);
-	   }
-	   else
-	   {
-		   tNode = DRL(tNode, right);
-	   }
+      avlFlag = false;
    }
-   
-   return tNode;	
+   else if (factor == RIGHT_UNBALANCED)
+   {
+      AVLTreeNode<T>* right = tNode->getRight();
+      AVL RBF = right->getBalanceFactor();
+
+      tNode->setBalanceFactor(BALANCED);
+      right->setBalanceFactor(BALANCED);
+
+      if (RBF == BALANCED)
+      {
+         tNode->setBalanceFactor(RIGHT_HEAVY);
+         right->setBalanceFactor(LEFT_HEAVY);
+         tNode = rotateLeft(tNode);
+         avlFlag = false;  
+      }
+      else if (RBF == RIGHT_HEAVY)
+      {
+         tNode = rotateLeft(tNode);
+      }
+      else
+      {
+         tNode = DRL(tNode, right);
+      }
+   }
+
+   return tNode;
 }
 
 template < class T >
 AVLTreeNode<T>* AVLTree<T>::avlFixRemoveRight(AVLTreeNode<T>* tNode)
 {
-   tNode->deleteRight();
-   AVL bal_fact = tNode->getBalanceFactor();
+   tNode->removeRight();
+   AVL factor = tNode->getBalanceFactor();
 
-   if(bal_fact == LEFT_HEAVY) avlFlag = false;
-   
-   if(bal_fact == LEFT_UNBALANCED)
+   if (factor == LEFT_HEAVY)
    {
-	   AVLTreeNode<T>* l = tNode->getLeft();
-	   AVL left_bal_fact = l->getBalanceFactor();
-	   tNode->setBalanceFactor(BALANCED);
-	   l->setBalanceFactor(BALANCED);
-	   
-	   if(left_bal_fact == BALANCED)
-	   {
-		   tNode->setBalanceFactor(LEFT_HEAVY);
-		   l->setBalanceFactor(RIGHT_HEAVY);
-		   tNode = rotateRight(tNode);
-		   avlFlag = false;
-	   }
-	   else if(left_bal_fact == LEFT_HEAVY)
-	   {
-		   tNode = rotateRight(tNode);
-	   }
-	   else
-	   {
-		   tNode = DLR(tNode, left);
-	   }
-	   
+      avlFlag = false;
+   }
+   else if (factor == LEFT_UNBALANCED)
+   {
+      AVLTreeNode<T>* left = tNode->getLeft();
+      AVL LBF = left->getBalanceFactor();
+
+      tNode->setBalanceFactor(BALANCED);
+      left->setBalanceFactor(BALANCED);
+
+      if (LBF == BALANCED)
+      {
+         tNode->setBalanceFactor(LEFT_HEAVY);
+         left->setBalanceFactor(RIGHT_HEAVY);
+         tNode = rotateRight(tNode);
+         avlFlag = false; 
+      }
+      else if (LBF == LEFT_HEAVY)
+      {
+         tNode = rotateRight(tNode);
+      }
+      else 
+      {
+         tNode = DLR(tNode, left);
+      }
    }
 
-   return tNode;	
+   return tNode;
 }
 
 template < class T >
@@ -724,7 +744,8 @@ void AVLTree<T>::insert(T* item)
 template < class T >
 void AVLTree<T>::remove(String* sk)
 {
-	root = removeItem(root, sk);	
+	root = removeItem(root, sk);
+	avlFlag = false;
 }
 
 template < class T >
