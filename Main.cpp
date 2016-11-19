@@ -13,6 +13,12 @@ using namespace CSC2110;
 #include "AVLTree.h"
 #include "ListArray.h"
 
+#include "Text.h"
+using CSC2110::String;
+
+#include "Valtostr.h"
+using CSC2110::Valtostr;
+
 
 class MyApp: public wxApp
 {
@@ -28,9 +34,19 @@ IMPLEMENT_APP(MyApp)
  
 bool MyApp::OnInit()
 {
+	
 	ListArray<CD>* cds = CD::readCDs(argv[1]);
+	Valtostr* iVal = new Valtostr();
 	int num_items = cds->size();
-	cout << num_items << endl;
+	String* nt_val = new String(iVal->i_to_c(num_items));
+	String* dh = new String("Height : ");
+	String* end_l = new String("\n");
+	end_l->displayString();
+	nt_val->displayString();
+	end_l->displayString();
+	end_l->displayString();
+	//cout << num_items << endl;
+	
 
 	ListArrayIterator<CD>* iter = cds->iterator();
 	AVLTree<CD>* avl = new AVLTree<CD>(&CD::compare_items, &CD::compare_keys);
@@ -39,16 +55,27 @@ bool MyApp::OnInit()
 		CD* cd = iter->next();
 		avl->insert(cd);
 		bool bf_check = avl->checkBalanceFactors();
-		//if(!bf_check)
-		//{
-			//cd->displayCD();
-			//exit(0);			
-		//}
-		//cout << "Bal\n";
+		if(!bf_check)
+		{
+			cd->displayCD();
+			exit(0);			
+		}
 	}
 	delete iter;
 	delete cds;
-	cout << "height: "<<avl->getHeight()<<endl;
+	
+	//just for fun
+  /*  
+	String* k1 = new String("Omnivium");
+	avl->remove(k1);
+	String* k2 = new String("Discordia");
+	avl->remove(k2);
+  */
+	//cout << "height: "<< avl->getHeight()<<endl;
+	nt_val = new String(iVal->i_to_c(avl->getHeight()));
+	
+	dh->displayString();
+	nt_val->displayString();
    
     wxBoxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
     frame = new wxFrame((wxFrame *)NULL, -1,  wxT("AVL Tree"), wxPoint(500,500), wxSize(1100,600));
@@ -60,6 +87,12 @@ bool MyApp::OnInit()
     frame->SetAutoLayout(true);
  
     frame->Show();
+	//delete k1;
+	//delete k2;
+	delete iVal;
+	delete nt_val;
+	delete dh;
+	delete end_l;
     return true;
 } 
 
