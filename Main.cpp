@@ -18,9 +18,6 @@ using CSC2110::String;
 #include "CD.h"
 using namespace CSC2110;
 
-#include "Valtostr.h"
-using CSC2110::Valtostr;
-
 
 class MyApp: public wxApp
 {
