@@ -1,5 +1,4 @@
-#include "CD.h"
-using namespace CSC2110;
+
 #include "wx/wx.h"
 #include "wx/sizer.h"
 
@@ -15,6 +14,9 @@ using namespace CSC2110;
 
 #include "Text.h"
 using CSC2110::String;
+
+#include "CD.h"
+using namespace CSC2110;
 
 #include "Valtostr.h"
 using CSC2110::Valtostr;
