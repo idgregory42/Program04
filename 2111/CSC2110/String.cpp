@@ -111,9 +111,7 @@ String* String::i_to_a(int number)
 {
    stringstream out;
    out << number;
-   const char* text = out.str().c_str();
-   String* str = new String(text);
-   delete text;
+   String* str = new String(out.str().c_str());
    return str;
 }
 
@@ -121,8 +119,6 @@ String* String::f_to_a(float number)
 {
    stringstream out;
    out << number;
-   const char* text = out.str().c_str();
-   String* str = new String(text);
-   delete text;
+   String* str = new String(out.str().c_str());
    return str;
 }

@@ -38,9 +38,8 @@ bool MyApp::OnInit()
 {
 	
 	ListArray<CD>* cds = CD::readCDs(argv[1]);
-	Valtostr* iVal = new Valtostr();
 	int num_items = cds->size();
-	String* nt_val = new String(iVal->i_to_c(num_items));
+	String* nt_val = String::i_to_a(num_items);
 	String* dh = new String("Height : ");
 	String* end_l = new String("\n");
 	end_l->displayString();
@@ -65,10 +64,8 @@ bool MyApp::OnInit()
 	delete iter;
 	delete cds;
 	
-	nt_val = new String(iVal->i_to_c(avl->getHeight()));
-	
 	dh->displayString();
-	nt_val->displayString();
+
    
     wxBoxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
     frame = new wxFrame((wxFrame *)NULL, -1,  wxT("AVL Tree"), wxPoint(500,500), wxSize(1100,600));
@@ -81,7 +78,7 @@ bool MyApp::OnInit()
  
     frame->Show();
 
-	delete iVal;
+
 	delete nt_val;
 	delete dh;
 	delete end_l;
