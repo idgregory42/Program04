@@ -426,12 +426,8 @@ AVLTreeNode<T>* AVLTree<T>::removeLeftMost(AVLTreeNode<T>* tNode)
    }
    else 
    {
-      subtree = removeLeftMost(tNode->getLeft());
-      tNode->setLeft(subtree);
-      if (avlFlag)
-      {
-         tNode = avlFixRemoveLeft(tNode);
-      }
+      tNode->setLeft(removeLeftMost(tNode->getLeft()));
+      if (avlFlag) tNode = avlFixRemoveLeft(tNode);
       return tNode;
    }  
 }
@@ -512,15 +508,8 @@ AVLTreeNode<T>* AVLTree<T>::avlFixAddLeft(AVLTreeNode<T>* tNode)
 		_left->setBalanceFactor(BALANCED);
 		tNode->setBalanceFactor(BALANCED);
 		
-		if(left_bal_fact == RIGHT_HEAVY)
-		{
-
-			tNode = DLR(tNode, _left);
-		}
-		else
-		{
-			tNode = rotateRight(tNode);
-		}
+		if(left_bal_fact == RIGHT_HEAVY) tNode = DLR(tNode, _left);
+		else tNode = rotateRight(tNode);
 		avlFlag = false;
 	}
 	return tNode;
@@ -542,14 +531,9 @@ AVLTreeNode<T>* AVLTree<T>::avlFixAddRight(AVLTreeNode<T>* tNode)
        _right->setBalanceFactor(BALANCED);
 	   tNode->setBalanceFactor(BALANCED);
 
-       if(right_bal_fact == LEFT_HEAVY)
-       {
-		   tNode = DRL(tNode, _right);
-       }
-       else
-       {
-		   tNode = rotateLeft(tNode);
-       }
+       if(right_bal_fact == LEFT_HEAVY) tNode = DRL(tNode, _right);
+       else tNode = rotateLeft(tNode);
+       
 	   avlFlag = false; 
    }
 
@@ -662,14 +646,10 @@ AVLTreeNode<T>* AVLTree<T>::DRL(AVLTreeNode<T>* tNode, AVLTreeNode<T>* right)
    
    rl->setBalanceFactor(BALANCED);
 
-   if (bal_fact == LEFT_HEAVY)
-   {
-	   right->setBalanceFactor(RIGHT_HEAVY);
-   }
-   else if(bal_fact == RIGHT_HEAVY)
-   {
-	   tNode->setBalanceFactor(LEFT_HEAVY);
-   }
+   if (bal_fact == LEFT_HEAVY) right->setBalanceFactor(RIGHT_HEAVY);
+  
+   else if(bal_fact == RIGHT_HEAVY) tNode->setBalanceFactor(LEFT_HEAVY);
+
    
    tNode = DRL(tNode);
    

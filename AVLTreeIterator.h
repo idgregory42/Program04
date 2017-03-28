@@ -52,10 +52,7 @@ bool AVLTreeIterator<T>::hasNext()
 template < class T >
 T* AVLTreeIterator<T>::next()
 {
-   if (hasNext())
-   {
-      return q->dequeue();
-   }
+   if (hasNext()) return q->dequeue();
 }
 
 template < class T >

@@ -90,10 +90,7 @@ void AVLTreeNode<T>::setItem(T* data)
 template < class T >
 void AVLTreeNode<T>::setBalanceFactor(AVL bf)
 {
-   if (bf == LEFT_HEAVY || bf == BALANCED || bf == RIGHT_HEAVY)
-   {
-      balanceFactor = bf;
-   }
+   if (bf == LEFT_HEAVY || bf == BALANCED || bf == RIGHT_HEAVY) balanceFactor = bf;
 }
 
 template < class T >
@@ -111,35 +108,18 @@ T* AVLTreeNode<T>::getItem()
 template < class T >
 void AVLTreeNode<T>::insertLeft()
 {
-   if (balanceFactor == RIGHT_HEAVY)
-   {
-      balanceFactor = BALANCED;
-   }
-   else if (balanceFactor == BALANCED)
-   {
-      balanceFactor = LEFT_HEAVY;
-   }
-   else
-   {
-      balanceFactor = LEFT_UNBALANCED;
-   }
+   if (balanceFactor == RIGHT_HEAVY) balanceFactor = BALANCED;
+   else if (balanceFactor == BALANCED) balanceFactor = LEFT_HEAVY;
+   else balanceFactor = LEFT_UNBALANCED;
+   
 }
 
 template < class T >
 void AVLTreeNode<T>::insertRight()
 {
-   if (balanceFactor == RIGHT_HEAVY)
-   {
-      balanceFactor = RIGHT_UNBALANCED;
-   }
-   else if (balanceFactor == BALANCED)
-   {
-      balanceFactor = RIGHT_HEAVY;
-   }
-   else
-   {
-      balanceFactor = BALANCED;
-   }
+   if (balanceFactor == RIGHT_HEAVY) balanceFactor = RIGHT_UNBALANCED;
+   else if (balanceFactor == BALANCED) balanceFactor = RIGHT_HEAVY;
+   else balanceFactor = BALANCED;
 }
 
 template < class T >
@@ -161,19 +141,10 @@ void AVLTreeNode<T>::draw(wxDC& dc, int x, int y)
    String* key = item->getKey();
    Color* color;
 
-   if (balanceFactor == BALANCED)
-   {
-      color = new Color(0.05098, 0.3372549, 0.65098);
-   }
-   else if (balanceFactor == LEFT_HEAVY)
-   {
-      color = new Color(1.0, 0.34902, 0.0);      
-   }
-   else
-   {
-      color = new Color(1.0, 0.77647, 0.0); 
-   }
-
+   if (balanceFactor == BALANCED) color = new Color(0.05098, 0.3372549, 0.65098);
+   else if (balanceFactor == LEFT_HEAVY) color = new Color(1.0, 0.34902, 0.0);      
+   else color = new Color(1.0, 0.77647, 0.0); 
+  
    Circle* circle = new Circle(color, 20, key);
    circle->draw(dc, x, y);
 

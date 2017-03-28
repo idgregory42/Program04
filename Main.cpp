@@ -45,7 +45,6 @@ bool MyApp::OnInit()
 	nt_val->displayString();
 	end_l->displayString();
 	end_l->displayString();
-	//cout << num_items << endl;
 	
 
 	ListArrayIterator<CD>* iter = cds->iterator();
@@ -64,14 +63,6 @@ bool MyApp::OnInit()
 	delete iter;
 	delete cds;
 	
-	//just for fun
-  /*  
-	String* k1 = new String("Omnivium");
-	avl->remove(k1);
-	String* k2 = new String("Discordia");
-	avl->remove(k2);
-  */
-	//cout << "height: "<< avl->getHeight()<<endl;
 	nt_val = new String(iVal->i_to_c(avl->getHeight()));
 	
 	dh->displayString();
@@ -87,8 +78,7 @@ bool MyApp::OnInit()
     frame->SetAutoLayout(true);
  
     frame->Show();
-	//delete k1;
-	//delete k2;
+
 	delete iVal;
 	delete nt_val;
 	delete dh;
